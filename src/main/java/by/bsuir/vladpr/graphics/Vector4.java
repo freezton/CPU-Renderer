@@ -21,11 +21,6 @@ public class Vector4 {
         this.w = w;
     }
 
-    public Vector4 normalize() {
-        double length = Math.sqrt(x*x + y*y + z*z);
-        return new Vector4(x/length, y/length, z/length);
-    }
-
     public double getX() {
         return x;
     }
@@ -58,12 +53,9 @@ public class Vector4 {
         this.z = z;
     }
 
-    public Vector4 multiply(Matrix4 matrix) {
+    public Vector4 multiply(Matrix matrix) {
         double[][] m = matrix.getMatrix();
-//        double x = this.x * m[0][0] + this.y * m[1][0] + this.z * m[2][0] + this.w * m[3][0];
-//        double y = this.x * m[0][1] + this.y * m[1][1] + this.z * m[2][1] + this.w * m[3][1];
-//        double z = this.x * m[0][2] + this.y * m[1][2] + this.z * m[2][2] + this.w * m[3][2];
-//        double w = this.x * m[0][3] + this.y * m[1][3] + this.z * m[2][3] + this.w * m[3][3];
+
         double x = m[0][0] * this.x + m[0][1] * this.y + m[0][2] * this.z + m[0][3] * this.w;
         double y = m[1][0] * this.x + m[1][1] * this.y + m[1][2] * this.z + m[1][3] * this.w;
         double z = m[2][0] * this.x + m[2][1] * this.y + m[2][2] * this.z + m[2][3] * this.w;
@@ -75,6 +67,27 @@ public class Vector4 {
             z /= w;
         }
         return new Vector4(x, y, z);
+    }
+
+    public Vector4 subtract(Vector4 other) {
+        return new Vector4(this.x - other.x, this.y - other.y, this.z - other.z);
+    }
+
+    public Vector4 normalize() {
+        double length = Math.sqrt(x*x + y*y + z*z);
+        return new Vector4(x/length, y/length, z/length);
+    }
+
+    public Vector4 cross(Vector4 other) {
+        return new Vector4(
+                this.y * other.z - this.z * other.y,
+                this.z * other.x - this.x * other.z,
+                this.x * other.y - this.y * other.x
+        );
+    }
+
+    public double dot(Vector4 vec) {
+        return this.x * vec.x + this.y * vec.y + this.z * vec.z;
     }
 
     @Override

@@ -1,8 +1,9 @@
 package by.bsuir.vladpr.graphics;
 
 import java.util.List;
+import java.util.Observable;
 
-public class Model {
+public class Model extends Object3d {
 
     private List<Triangle> triangles;
 
