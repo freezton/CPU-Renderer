@@ -1,13 +1,13 @@
 package by.bsuir.vladpr.graphics;
 
-public class Face {
+public class Triangle {
 
     private Vector4[] vertices = new Vector4[3];
     private Vector4[] normals = new Vector4[3];
     private Vector3[] textures = new Vector3[3];
     private Vector4 normal;
 
-    public Face(Vector4 p1, Vector4 p2, Vector4 p3) {
+    public Triangle(Vector4 p1, Vector4 p2, Vector4 p3) {
         vertices[0] = p1;
         vertices[1] = p2;
         vertices[2] = p3;

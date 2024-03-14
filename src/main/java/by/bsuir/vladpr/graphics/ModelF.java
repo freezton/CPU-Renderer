@@ -6,13 +6,13 @@ public class ModelF {
     private List<Vector4> vertices;
     private List<Vector3> textures;
     private List<Vector4> normals;
-    private List<Face> faces;
+    private List<Triangle> triangles;
 
-    public ModelF(List<Vector4> vertices, List<Vector3> textures, List<Vector4> normals, List<Face> faces) {
+    public ModelF(List<Vector4> vertices, List<Vector3> textures, List<Vector4> normals, List<Triangle> triangles) {
         this.vertices = vertices;
         this.textures = textures;
         this.normals = normals;
-        this.faces = faces;
+        this.triangles = triangles;
     }
 
     @Override

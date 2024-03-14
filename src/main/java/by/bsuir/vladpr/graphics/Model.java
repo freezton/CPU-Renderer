@@ -4,16 +4,20 @@ import java.util.List;
 
 public class Model {
 
-    private List<Face> faces;
+    private List<Triangle> triangles;
 
-    public Model(List<Face> faces) {
-        this.faces = faces;
+    public Model(List<Triangle> triangles) {
+        this.triangles = triangles;
+    }
+
+    public List<Triangle> getTriangles() {
+        return triangles;
     }
 
     @Override
     public String toString() {
         return "Model{" +
-                ", faces=" + faces +
+                ", faces=" + triangles +
                 "}\n";
     }
 }

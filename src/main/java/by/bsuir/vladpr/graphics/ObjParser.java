@@ -12,13 +12,13 @@ public class ObjParser {
     private List<Vector4> vertices;
     private List<Vector3> textures;
     private List<Vector4> normals;
-    private List<Face> faces;
+    private List<Triangle> triangles;
 
     {
         vertices = new ArrayList<>();
         textures = new ArrayList<>();
         normals = new ArrayList<>();
-        faces = new ArrayList<>();
+        triangles = new ArrayList<>();
     }
 
     private void parseLine(String line) {
@@ -69,14 +69,14 @@ public class ObjParser {
                     }
                 }
                 for (int i = 0; i < v.length-1; i++) {
-                    Face face = new Face(vertices.get(0), vertices.get(i), vertices.get(i+1));
+                    Triangle triangle = new Triangle(vertices.get(v[0]), vertices.get(v[i]), vertices.get(v[i+1]));
                     if (vn != null) {
-                        face.setNormals(normals.get(vn[0]), normals.get(vn[i]), normals.get(vn[i+1]));
+                        triangle.setNormals(normals.get(vn[0]), normals.get(vn[i]), normals.get(vn[i+1]));
                     }
                     if (vt != null) {
-                        face.setTextures(textures.get(vt[0]), textures.get(vt[i]), textures.get(vt[i+1]));
+                        triangle.setTextures(textures.get(vt[0]), textures.get(vt[i]), textures.get(vt[i+1]));
                     }
-                    faces.add(face);
+                    triangles.add(triangle);
                 }
                 break;
         }
@@ -86,7 +86,7 @@ public class ObjParser {
         vertices = new ArrayList<>();
         textures = new ArrayList<>();
         normals = new ArrayList<>();
-        faces = new ArrayList<>();
+        triangles = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -94,7 +94,7 @@ public class ObjParser {
                     continue;
                 parseLine(line);
             }
-            return new Model(faces);
+            return new Model(triangles);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
