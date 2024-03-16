@@ -8,6 +8,7 @@ public class Object3d {
 
     public void translate(Vector3 translation) {
         identity = Matrix.translate(translation).multiply(identity);
+        position = position.add(translation.vec4());
     }
 
     public void rotateX(double angle) {

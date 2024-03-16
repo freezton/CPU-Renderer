@@ -1,5 +1,6 @@
 package by.bsuir.vladpr.graphics;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
@@ -9,6 +10,14 @@ public class Model extends Object3d {
 
     public Model(List<Triangle> triangles) {
         this.triangles = triangles;
+    }
+
+    public Model() {
+        this.triangles = new ArrayList<Triangle>();
+    }
+
+    public void addTriangle(Triangle triangle) {
+        triangles.add(triangle);
     }
 
     public List<Triangle> getTriangles() {

@@ -1,7 +1,10 @@
 package by.bsuir.vladpr.graphics;
 
+import by.bsuir.vladpr.Window;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Camera extends Object3d {
 
@@ -23,7 +26,12 @@ public class Camera extends Object3d {
         this.image = image;
     }
 
-    public void drawModel(Model model) {
+    public void drawModel(Model model1) {
+        Model model = new Model(new ArrayList<>(model1.getTriangles()));
+        model.setIdentity(model1.getIdentity());
+        model.setPosition(model1.getPosition());
+        model.translate(model.getPosition().vec3());
+
         Matrix id = getResultTransformation(model.getIdentity());
         for (Triangle triangle : model.getTriangles()) {
             Vector4[] vertices = triangle.getVertices();
@@ -61,6 +69,8 @@ public class Camera extends Object3d {
     }
 
     public void drawLine(BufferedImage image, int x1, int y1, int x2, int y2) {
+//        if (Window.is)
+//            image.setRGB(20, 20, Color.WHITE.getRGB());
         int width = image.getWidth();
         int height = image.getHeight();
 
@@ -102,6 +112,8 @@ public class Camera extends Object3d {
     }
 
     private Vector4 eye() {
+//        double[][] identity = this.getIdentity().getMatrix();
+//        return new Vector4(identity[0][0], identity[0][1], identity[0][2]);
         return getPosition();
     }
 

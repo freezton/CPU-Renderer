@@ -42,6 +42,10 @@ public class Vector3 {
         );
     }
 
+    public Vector4 vec4() {
+        return new Vector4(this.u, this.v, this.w);
+    }
+
     public Vector3 normalize() {
         double length = Math.sqrt(u*u + v*v + w*w);
         return new Vector3(u/length, v/length, w/length);

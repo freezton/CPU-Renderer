@@ -69,8 +69,8 @@ public class Vector4 {
         return new Vector4(x, y, z);
     }
 
-    public Vector4 subtract(Vector4 other) {
-        return new Vector4(this.x - other.x, this.y - other.y, this.z - other.z);
+    public Vector4 subtract(Vector4 vec) {
+        return new Vector4(this.x - vec.x, this.y - vec.y, this.z - vec.z);
     }
 
     public Vector4 normalize() {
@@ -78,16 +78,24 @@ public class Vector4 {
         return new Vector4(x/length, y/length, z/length);
     }
 
-    public Vector4 cross(Vector4 other) {
+    public Vector4 cross(Vector4 vec) {
         return new Vector4(
-                this.y * other.z - this.z * other.y,
-                this.z * other.x - this.x * other.z,
-                this.x * other.y - this.y * other.x
+                this.y * vec.z - this.z * vec.y,
+                this.z * vec.x - this.x * vec.z,
+                this.x * vec.y - this.y * vec.x
         );
     }
 
     public double dot(Vector4 vec) {
         return this.x * vec.x + this.y * vec.y + this.z * vec.z;
+    }
+
+    public Vector4 add(Vector4 vec) {
+        return new Vector4(this.x + vec.x, this.y + vec.y, this.z + vec.z);
+    }
+
+    public Vector3 vec3() {
+        return new Vector3(this.x, this.y, this.z);
     }
 
     @Override
