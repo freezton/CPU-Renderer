@@ -26,22 +26,27 @@ public class Camera extends Object3d {
         this.image = image;
     }
 
-    public void drawModel(Model model1) {
-        Model model = new Model(new ArrayList<>(model1.getTriangles()));
-        model.setIdentity(model1.getIdentity());
-        model.setPosition(model1.getPosition());
-        model.translate(model.getPosition().vec3());
+    public void drawModel(Model model) {
+//        Model model = new Model(new ArrayList<>(model1.getTriangles()));
+//        model.setIdentity(model1.getIdentity());
+//        model.setPosition(model1.getPosition());
+//        model.translate(model.getPosition().vec3());
 
+        model.translate(model.getPosition().vec3());
         Matrix id = getResultTransformation(model.getIdentity());
+        Model newModel = new Model();
         for (Triangle triangle : model.getTriangles()) {
-            Vector4[] vertices = triangle.getVertices();
+            Triangle t = new Triangle(triangle);
+            newModel.addTriangle(t);
+            Vector4[] vertices = t.getVertices();
             for (int i = 0; i < vertices.length; i++) {
                 Vector4 out = vertices[i].multiply(id);
                 vertices[i] = out;
             }
         }
 
-        for (Triangle triangle : model.getTriangles()) {
+
+        for (Triangle triangle : newModel.getTriangles()) {
             Vector4[] vertices = triangle.getVertices();
             for (int i = 0; i < vertices.length; i++) {
                 Vector4 currentVertex = vertices[i];
@@ -101,17 +106,24 @@ public class Camera extends Object3d {
         }
     }
 
-    private Vector4 target() {
+    public Vector4 target() {
         double[][] identity = this.getIdentity().getMatrix();
         return new Vector4(identity[2][0], identity[2][1], identity[2][2]);
     }
 
-    private Vector4 up() {
+    public void setTarget(Vector4 target) {
+        double[][] identity = this.getIdentity().getMatrix();
+        identity[2][0] = target.getX();
+        identity[2][1] = target.getY();
+        identity[2][2] = target.getZ();
+    }
+
+    public Vector4 up() {
         double[][] identity = this.getIdentity().getMatrix();
         return new Vector4(identity[1][0], identity[1][1], identity[1][2]);
     }
 
-    private Vector4 eye() {
+    public Vector4 eye() {
 //        double[][] identity = this.getIdentity().getMatrix();
 //        return new Vector4(identity[0][0], identity[0][1], identity[0][2]);
         return getPosition();

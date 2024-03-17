@@ -1,5 +1,7 @@
 package by.bsuir.vladpr.graphics;
 
+import java.util.Arrays;
+
 public class Triangle {
 
     private Vector4[] vertices = new Vector4[3];
@@ -16,6 +18,14 @@ public class Triangle {
             textures[i] = new Vector3(0,0);
         }
         findNormal();
+    }
+
+    public Triangle(Triangle t) {
+        this.vertices = Arrays.copyOf(t.vertices, t.vertices.length);
+        this.normals = Arrays.copyOf(t.normals, t.normals.length);
+        this.textures = Arrays.copyOf(t.textures, t.textures.length);
+        if (t.normal != null)
+            this.normal = new Vector4(t.normal);
     }
 
     public void setNormals(Vector4 n1, Vector4 n2, Vector4 n3) {

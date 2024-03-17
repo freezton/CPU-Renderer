@@ -21,6 +21,13 @@ public class Vector4 {
         this.w = w;
     }
 
+    public Vector4(Vector4 vec) {
+        this.x = vec.x;
+        this.y = vec.y;
+        this.z = vec.z;
+        this.w = vec.w;
+    }
+
     public double getX() {
         return x;
     }
