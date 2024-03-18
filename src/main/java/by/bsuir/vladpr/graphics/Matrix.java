@@ -93,6 +93,7 @@ public class Matrix {
                 {yAxis.getX(), yAxis.getY(), yAxis.getZ(), -yAxis.dot(eye)},
                 {zAxis.getX(), zAxis.getY(), zAxis.getZ(), -zAxis.dot(eye)},
                 {0, 0, 0, 1}
+
         });
     }
 

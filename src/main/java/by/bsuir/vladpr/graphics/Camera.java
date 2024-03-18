@@ -1,10 +1,7 @@
 package by.bsuir.vladpr.graphics;
 
-import by.bsuir.vladpr.Window;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Camera extends Object3d {
 
@@ -64,7 +61,7 @@ public class Camera extends Object3d {
         Matrix transform = Matrix.viewportTransformation(screenWidth, screenHeight, 0, 0);
         Matrix perspectiveProjection = Matrix.perspectiveProjectionFOV(fov, aspect, near, far);
         Matrix viewMatrix = Matrix.viewMatrix(
-                eye(),
+                position(),
                 target(),
                 up()
         );
@@ -123,7 +120,14 @@ public class Camera extends Object3d {
         return new Vector4(identity[1][0], identity[1][1], identity[1][2]);
     }
 
-    public Vector4 eye() {
+    public void setUp(Vector4 up) {
+        double[][] identity = this.getIdentity().getMatrix();
+        identity[1][0] = up.getX();
+        identity[1][1] = up.getY();
+        identity[1][2] = up.getZ();
+    }
+
+    public Vector4 position() {
 //        double[][] identity = this.getIdentity().getMatrix();
 //        return new Vector4(identity[0][0], identity[0][1], identity[0][2]);
         return getPosition();

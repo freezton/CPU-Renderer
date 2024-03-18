@@ -18,6 +18,9 @@ public class Window extends JFrame {
     Model model;
     Camera camera;
 
+    private double yaw = 0;
+    private double pitch = 0;
+
     public static void main(String[] args) {
         Window window = new Window();
     }
@@ -40,6 +43,7 @@ public class Window extends JFrame {
         double far = 1000.0;
         camera = new Camera(SCREEN_HEIGHT, SCREEN_WIDTH, fov, near, far, image);
         camera.setPosition(new Vector4(0, 0.5, -3));
+//        model.translate(new Vector3(-1, 0, 0));
 
         this.addMouseWheelListener(this::rotateXModel);
         this.addMouseListener(new MouseAdapter() {
@@ -63,14 +67,14 @@ public class Window extends JFrame {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_W: {
                         eye = new Vector4(
-                                camera.eye().getX() + camera.target().getX() * speed,
-                                camera.eye().getY() + camera.target().getY() * speed,
-                                camera.eye().getZ() + camera.target().getZ() * speed
+                                camera.position().getX() + camera.target().getX() * speed,
+                                camera.position().getY() + camera.target().getY() * speed,
+                                camera.position().getZ() + camera.target().getZ() * speed
                         );
 //                        target = new Vector4(
-//                                camera.eye().getX() + camera.target().getX(),
-//                                camera.eye().getY() + camera.target().getY(),
-//                                camera.eye().getZ() + camera.target().getZ()
+//                                camera.position().getX() + camera.target().getX(),
+//                                camera.position().getY() + camera.target().getY(),
+//                                camera.position().getZ() + camera.target().getZ()
 //                        );
                         break;
                     }
@@ -82,7 +86,6 @@ public class Window extends JFrame {
                 repaint();
             }
         });
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("Renderer");
