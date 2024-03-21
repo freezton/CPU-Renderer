@@ -24,13 +24,9 @@ public class Camera extends Object3d {
     }
 
     public void drawModel(Model model) {
-//        Model model = new Model(new ArrayList<>(model1.getTriangles()));
-//        model.setIdentity(model1.getIdentity());
-//        model.setPosition(model1.getPosition());
-//        model.translate(model.getPosition().vec3());
 
-        model.translate(model.getPosition().vec3());
         Matrix id = getResultTransformation(model.getIdentity());
+//        model.translate(model.getPosition().vec3());
         Model newModel = new Model();
         for (Triangle triangle : model.getTriangles()) {
             Triangle t = new Triangle(triangle);
@@ -41,7 +37,6 @@ public class Camera extends Object3d {
                 vertices[i] = out;
             }
         }
-
 
         for (Triangle triangle : newModel.getTriangles()) {
             Vector4[] vertices = triangle.getVertices();

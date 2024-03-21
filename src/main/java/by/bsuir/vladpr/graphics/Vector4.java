@@ -93,12 +93,24 @@ public class Vector4 {
         );
     }
 
+    public void divide(int num) {
+        this.x /= num;
+        this.y /= num;
+        this.z /= num;
+    }
+
     public double dot(Vector4 vec) {
         return this.x * vec.x + this.y * vec.y + this.z * vec.z;
     }
 
-    public Vector4 add(Vector4 vec) {
-        return new Vector4(this.x + vec.x, this.y + vec.y, this.z + vec.z);
+    public void add(Vector4 vec) {
+        this.x += vec.x;
+        this.y += vec.y;
+        this.z += vec.z;
+    }
+
+    public Vector4 minus() {
+        return new Vector4(-this.x, -this.y, -this.z);
     }
 
     public Vector3 vec3() {

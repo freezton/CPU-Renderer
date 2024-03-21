@@ -18,9 +18,6 @@ public class Window extends JFrame {
     Model model;
     Camera camera;
 
-    private double yaw = 0;
-    private double pitch = 0;
-
     public static void main(String[] args) {
         Window window = new Window();
     }
@@ -42,47 +39,45 @@ public class Window extends JFrame {
         double near = 0.1;
         double far = 1000.0;
         camera = new Camera(SCREEN_HEIGHT, SCREEN_WIDTH, fov, near, far, image);
-        camera.setPosition(new Vector4(0, 0.5, -3));
-//        model.translate(new Vector3(-1, 0, 0));
+        camera.setPosition(new Vector4(0, 0, -7));
+        Vector4 center = model.getCenter();
+        model.translate(center.minus().vec3());
 
-        this.addMouseWheelListener(this::rotateXModel);
+        this.addMouseWheelListener(this::rotateZModel);
+
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 lastMousePosition = new Point(e.getX(), e.getY());
             }
         });
+
         this.addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                moveCamera(e);
+                rotateObject(e);
             }
         });
+
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                Vector4 eye = new Vector4(0,0,0);
-                Vector4 target = new Vector4(0,0,0);
                 double speed = 0.1;
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_W: {
-                        eye = new Vector4(
-                                camera.position().getX() + camera.target().getX() * speed,
-                                camera.position().getY() + camera.target().getY() * speed,
-                                camera.position().getZ() + camera.target().getZ() * speed
-                        );
-//                        target = new Vector4(
-//                                camera.position().getX() + camera.target().getX(),
-//                                camera.position().getY() + camera.target().getY(),
-//                                camera.position().getZ() + camera.target().getZ()
-//                        );
-                        break;
-                    }
-                    default:
-                        return;
+                if (e.getKeyCode() == KeyEvent.VK_W) {
+                    camera.setPosition(new Vector4(
+                            camera.position().getX(),
+                            camera.position().getY(),
+                            camera.position().getZ() + speed
+                    ));
+                } else if (e.getKeyCode() == KeyEvent.VK_S) {
+                    camera.setPosition(new Vector4(
+                            camera.position().getX(),
+                            camera.position().getY(),
+                            camera.position().getZ() - speed
+                    ));
+                } else {
+                    return;
                 }
-//                camera.setTarget(target);
-                camera.setPosition(eye);
                 repaint();
             }
         });
@@ -92,23 +87,21 @@ public class Window extends JFrame {
         this.setVisible(true);
     }
 
-    private void moveCamera(MouseEvent e) {
+    private void rotateObject(MouseEvent e) {
         int dx = e.getX() - lastMousePosition.x;
         int dy = e.getY() - lastMousePosition.y;
-        double sensitivity = 0.01;
-        Vector4 target = new Vector4(
-                camera.target().getX() + dx * sensitivity,
-                camera.target().getY() + dy * sensitivity,
-                camera.target().getZ()
-        );
-        camera.setTarget(target);
+        double sensitivity = 0.1;
+        model.rotateX(-dy*sensitivity);
+        model.rotateY(dx*sensitivity);
         lastMousePosition = e.getPoint();
         repaint();
     }
 
-    private void rotateXModel(MouseWheelEvent e) {
-        image.setRGB(10, 10, Color.WHITE.getRGB());
-        model.rotateY(5);
+    private void rotateZModel(MouseWheelEvent e) {
+        if (e.getWheelRotation() < 0)
+            model.rotateZ(2);
+        else
+            model.rotateZ(-2);
         repaint();
     }
 

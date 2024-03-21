@@ -24,6 +24,17 @@ public class Model extends Object3d {
         return triangles;
     }
 
+    public Vector4 getCenter() {
+        Vector4 result = new Vector4(0,0,0);
+        for (Triangle triangle : triangles) {
+            for (Vector4 vector4: triangle.getVertices()) {
+                result.add(vector4);
+            }
+        }
+        result.divide(triangles.size()*3);
+        return result;
+    }
+
     @Override
     public String toString() {
         return "Model{" +
