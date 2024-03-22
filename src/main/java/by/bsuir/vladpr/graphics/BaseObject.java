@@ -1,6 +1,6 @@
 package by.bsuir.vladpr.graphics;
 
-public class Object3d {
+public class BaseObject {
 
     protected Vector4 position = new Vector4(0, 0, 0);
 

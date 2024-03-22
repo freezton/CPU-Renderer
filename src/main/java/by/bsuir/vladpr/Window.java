@@ -22,11 +22,7 @@ public class Window extends JFrame {
         Window window = new Window();
     }
 
-    public Window() {
-        this.setResizable(false);
-        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
-        this.add(new JLabel(new ImageIcon(image)));
-
+    {
         ObjParser parser = new ObjParser();
         try {
             model = parser.parse(Objects.requireNonNull(this.getClass().getClassLoader()
@@ -42,6 +38,12 @@ public class Window extends JFrame {
         camera.setPosition(new Vector4(0, 0, -7));
         Vector4 center = model.getCenter();
         model.translate(center.minus().vec3());
+    }
+
+    public Window() {
+        this.setResizable(false);
+        this.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
+        this.add(new JLabel(new ImageIcon(image)));
 
         this.addMouseWheelListener(this::rotateZModel);
 
@@ -64,23 +66,17 @@ public class Window extends JFrame {
             public void keyPressed(KeyEvent e) {
                 double speed = 0.1;
                 if (e.getKeyCode() == KeyEvent.VK_W) {
-                    camera.setPosition(new Vector4(
-                            camera.position().getX(),
-                            camera.position().getY(),
-                            camera.position().getZ() + speed
-                    ));
+                    if (camera.getPosition().getZ() <= -1)
+                        camera.getPosition().add(new Vector4(0, 0, speed));
                 } else if (e.getKeyCode() == KeyEvent.VK_S) {
-                    camera.setPosition(new Vector4(
-                            camera.position().getX(),
-                            camera.position().getY(),
-                            camera.position().getZ() - speed
-                    ));
+                    camera.getPosition().add(new Vector4(0, 0, -speed));
                 } else {
                     return;
                 }
                 repaint();
             }
         });
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setTitle("Renderer");

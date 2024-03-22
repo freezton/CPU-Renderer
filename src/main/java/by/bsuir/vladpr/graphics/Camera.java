@@ -3,7 +3,7 @@ package by.bsuir.vladpr.graphics;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Camera extends Object3d {
+public class Camera extends BaseObject {
 
     private int screenWidth;
     private int screenHeight;
